@@ -175,22 +175,19 @@ client.on("messageCreate", (message) => {
       message.channel.send({ embeds: [datesEmbed] });
     } else if (command == "mal") {
       const userName = message.content.slice(1).toLowerCase().split(" ")[1];
-      let listType = message.content.slice(1).toLowerCase().split(" ")[2];
-      switch (listType) {
-        case "ptw":
-          listType = "6";
-          break;
-        case "watching":
-          listType = "1";
-          break;
-        case "completed":
-          listType = "2";
-          break;
-        default:
-          listType = "all";
-      }      
+      // let listType = message.content.slice(1).toLowerCase().split(" ")[2];
+      // switch (listType) {
+      //   case "watching":
+      //     listType = "1";
+      //     break;
+      //   case "completed":
+      //     listType = "2";
+      //     break;
+      //   default:
+      //     listType = "6";
+      // }      
 
-      getAnimeList(userName, listType, (error, result) => {
+      getAnimeList(userName, "6", (error, result) => {
         if (error) {
           message.channel.send("Incorrect inputs");
           console.error(error);
@@ -199,7 +196,7 @@ client.on("messageCreate", (message) => {
 
         const malEmbed = new EmbedBuilder()
         .setColor("#2f3136")
-        .setTitle("Request Mal List")
+        .setTitle("Requested Mal List")
         .setDescription(result);
 
         message.channel.send({ embeds: [malEmbed] });
