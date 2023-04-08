@@ -176,7 +176,6 @@ client.on("messageCreate", (message) => {
     } else if (command == "mal") {
       const userName = message.content.slice(1).toLowerCase().split(" ")[1];
       let listType = message.content.slice(1).toLowerCase().split(" ")[2];
-//# status = 6 plan to watch; status = 1 watching, status = 2 completed; status = 7 all
       switch (listType) {
         case "ptw":
           listType = "6";
@@ -189,15 +188,21 @@ client.on("messageCreate", (message) => {
           break;
         default:
           listType = "all";
-      }
+      }      
 
       getAnimeList(userName, listType, (error, result) => {
         if (error) {
           message.channel.send("Incorrect inputs");
           console.error(error);
-        } else {
-          message.channel.send(result);
-        }
+          return;
+        } 
+
+        const malEmbed = new EmbedBuilder()
+        .setColor("#2f3136")
+        .setTitle("Request Mal List")
+        .setDescription(result);
+
+        message.channel.send({ embeds: [malEmbed] });
       });
     }
   }
