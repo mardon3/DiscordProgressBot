@@ -175,7 +175,7 @@ client.on("messageCreate", (message) => {
       message.channel.send({ embeds: [datesEmbed] });
     } else if (command == "mal") {
       const userName = message.content.slice(1).toLowerCase().split(" ")[1];
-      const listType = message.content.slice(1).toLowerCase().split(" ")[2];
+      let listType = message.content.slice(1).toLowerCase().split(" ")[2];
 //# status = 6 plan to watch; status = 1 watching, status = 2 completed; status = 7 all
       switch (listType) {
         case "ptw":
