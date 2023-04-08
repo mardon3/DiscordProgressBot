@@ -1,5 +1,6 @@
 require("dotenv").config();
 const { Client, IntentsBitField, EmbedBuilder } = require("discord.js");
+const getAnimeList = require('./mal.js').getAnimeList;
 let startDate = new Date("2023-01-09");
 let endDate = new Date("2023-05-09");
 
@@ -172,6 +173,32 @@ client.on("messageCreate", (message) => {
         );
 
       message.channel.send({ embeds: [datesEmbed] });
+    } else if (command == "mal") {
+      const userName = message.content.slice(1).toLowerCase().split(" ")[1];
+      const listType = message.content.slice(1).toLowerCase().split(" ")[2];
+//# status = 6 plan to watch; status = 1 watching, status = 2 completed; status = 7 all
+      switch (listType) {
+        case "ptw":
+          listType = "6";
+          break;
+        case "watching":
+          listType = "1";
+          break;
+        case "completed":
+          listType = "2";
+          break;
+        default:
+          listType = "all";
+      }
+
+      getAnimeList(userName, listType, (error, result) => {
+        if (error) {
+          message.channel.send("Incorrect inputs");
+          console.error(error);
+        } else {
+          message.channel.send(result);
+        }
+      });
     }
   }
 });
