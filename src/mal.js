@@ -60,14 +60,6 @@ function getAnimeList(user, url, callback) {
   });
 }
 
-getAnimeList("crayolasteel", "6", (error, result) => {
-    if (error) {
-      console.error(error);
-    } else {
-      console.log(result);
-    }
-  });
-
 module.exports = {
   getAnimeList: getAnimeList
 };
