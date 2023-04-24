@@ -1,6 +1,6 @@
 require("dotenv").config();
 const { Client, IntentsBitField, EmbedBuilder } = require("discord.js");
-const getAnimeList = require('./mal.js').getAnimeList;
+const getAnimeList = require("./mal.js").getAnimeList;
 let startDate = new Date("2023-01-09");
 let endDate = new Date("2023-05-09");
 
@@ -34,7 +34,7 @@ client.on("messageCreate", (message) => {
     if (command === "progress") {
       if (percentage <= 100 && percentage >= 0) {
         const progressBar =
-          "█".repeat(Math.round((barLength * percentage) / 100)) +
+          "▒".repeat(Math.round((barLength * percentage) / 100)) +
           "░".repeat(barLength - Math.round((barLength * percentage) / 100));
 
         const progressBarEmbed = new EmbedBuilder()
@@ -44,7 +44,7 @@ client.on("messageCreate", (message) => {
 
         message.channel.send({ embeds: [progressBarEmbed] });
       } else if (percentage > 100) {
-        const progressBar = "█".repeat(36);
+        const progressBar = "▒".repeat(36);
 
         const progressBarEmbed = new EmbedBuilder()
           .setColor("#2f3136")
@@ -175,29 +175,18 @@ client.on("messageCreate", (message) => {
       message.channel.send({ embeds: [datesEmbed] });
     } else if (command == "mal") {
       const userName = message.content.slice(1).toLowerCase().split(" ")[1];
-      // let listType = message.content.slice(1).toLowerCase().split(" ")[2];
-      // switch (listType) {
-      //   case "watching":
-      //     listType = "1";
-      //     break;
-      //   case "completed":
-      //     listType = "2";
-      //     break;
-      //   default:
-      //     listType = "6";
-      // }      
 
       getAnimeList(userName, "6", (error, result) => {
         if (error) {
           message.channel.send("Incorrect inputs");
           console.error(error);
           return;
-        } 
+        }
 
         const malEmbed = new EmbedBuilder()
-        .setColor("#2f3136")
-        .setTitle("Requested Mal List")
-        .setDescription(result);
+          .setColor("#2f3136")
+          .setTitle("Requested Mal List")
+          .setDescription(result);
 
         message.channel.send({ embeds: [malEmbed] });
       });
